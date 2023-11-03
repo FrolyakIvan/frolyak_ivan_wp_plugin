@@ -1,0 +1,1 @@
+# frolyak_ivan_wp_plugin
