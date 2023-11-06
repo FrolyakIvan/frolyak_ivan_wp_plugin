@@ -1,0 +1,28 @@
+
+/* Basic css styling... */
+#content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+    height: 100vw;
+    justify-content: center;
+}
+
+#content .row {
+    width: 100%;
+    height: auto;
+    justify-content: center;
+}
+
+.row .title {
+    color: rgb(48, 48, 48);
+}
+
+table {
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+}

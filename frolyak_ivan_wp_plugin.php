@@ -15,6 +15,7 @@ if (is_readable(__DIR__ . '/vendor/autoload.php')) {
 }
 
 
+define('PLUGIN_URL', plugin_dir_url(__FILE__));
 define('PLUGIN_DIR', plugin_dir_path(__FILE__));
 
 $init = new FrolyakIvanWpPlugin();

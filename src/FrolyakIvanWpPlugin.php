@@ -28,7 +28,7 @@ class FrolyakIvanWpPlugin {
     public function __construct() {
         $cacheHandler = new CacheHandler();
         $apiService = new APIService($cacheHandler);
-        $viewController = new ViewController();
+        $viewController = ViewController::instance();
 
         $this->endpointController = new EndpointController($apiService, $viewController);
     }
