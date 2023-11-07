@@ -9,7 +9,10 @@
 
 namespace Frolyak\FrolyakIvanWpPlugin;
 
-// If Composer is used, autoload classes<
+/**
+ * Require vendor/autoload
+ */
+
 if (is_readable(__DIR__ . '/vendor/autoload.php')) {
     require_once __DIR__ . '/vendor/autoload.php';
 }

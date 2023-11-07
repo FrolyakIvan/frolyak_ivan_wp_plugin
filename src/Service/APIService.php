@@ -38,20 +38,20 @@ class APIService {
      *  or, in case of a error a false
      */
     public function get_api_data(string $endpoint) {
-        // TODO: CHECK if endpoint starts with "/" ???
-
         // Check if cached
         $apiRequestUrl = "$this->API_URL$endpoint";
 
         $key = self::generate_cache_key($apiRequestUrl);
 
-        // if ($cachedValue = $this->cacheHandler->get($key)) return $cachedValue;
+        if ($cachedValue = $this->cacheHandler->get($key)) return self::parse_api_data($cachedValue);
 
         $fetchedData = $this->fetch_data($apiRequestUrl);
 
-        // if (!$fetchedData) {} // FIXME: ERROR
+        // If an error has ocurred return error details to the endpoint...
+        if(is_array($fetchedData) && isset($fetchedData['error'])) return $fetchedData;
 
-        // $this->cacheHandler->set($key, $fetchedData);
+        // If not cached, get and set new data
+        $this->cacheHandler->set($key, $fetchedData);
 
         return self::parse_api_data($fetchedData);
     }
@@ -67,14 +67,24 @@ class APIService {
         $response = wp_remote_get($url);
 
         if (is_wp_error($response)) {
-            // FIXME: ERROR
-            // echo 'API request failed: ' . $response->get_error_message();
-            return false;
+            return [
+                'error' => 'REQUEST_ERROR',
+                'error_code' => $response->get_error_code(),
+                'error_message' => $response->get_error_message(),
+                'message' => 'API request failed.',
+            ];
         }
 
         $data = wp_remote_retrieve_body($response);
 
-        // if (empty($data)) // FIXME: ERROR
+        // If body is empty return error
+        if (is_string($data) && empty(trim($data))) {
+            return [
+                'error' => 'EMPTY_DATA',
+                'message' => 'The request URL might be mistaken or external API
+                    is not available at this moment.'
+            ];
+        }
 
         return $data;
     }
@@ -86,7 +96,6 @@ class APIService {
      * @return string Returns a hashed identifier
      */
     private static function generate_cache_key($url) {
-        // TODO: CHECK if endpoint starts with "/" ???
         return md5($url);
     }
 
@@ -97,14 +106,21 @@ class APIService {
      * @return array|bool
      */
     private static function parse_api_data($data) {
-        $parsedData = false;
+        $parsedData = null;
 
-        if (!empty($data) && is_string($data)) $parsedData = json_decode($data, true);
-        else if (!empty($data) && is_array($data)) return $data;
-
-        if (json_last_error() === JSON_ERROR_NONE) return $parsedData;
-        else {
-            // FIXME: ERROR
+        if (!empty($data) && is_string($data)) {
+            $parsedData = json_decode($data, true);
+            if (json_last_error() === JSON_ERROR_NONE) return $parsedData;
+            else {
+                $jsonErrorMsg = json_last_error_msg();
+                return [
+                    'error' => 'JSON_ERROR',
+                    'error_message' => $jsonErrorMsg,
+                    'message' => 'Given response body is not a valid JSON'
+                ];
+            }
         }
+        else if (!empty($data) && is_array($data)) return $data;
+        else return [];
     }
 }

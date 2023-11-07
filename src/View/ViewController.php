@@ -33,25 +33,29 @@ class ViewController {
         return self::$instance;
     }
 
-    // TODO: FEATURES
-    // public function getTemplates() {}
-
     /**
      * Sets the template to be returned
 
      * @param array data
+     * @param string template
      * @return string|bool Depending of template existence
      */
-    public function setTemplate($data) {
+    public function setTemplate($data, $template) {
         $templateFile = PLUGIN_DIR . 'templates/basicTemplate.php';
 
-        if (is_array($data) && count($data)) $this->setData($data);
-        else if (is_string($data) || empty($data)) $data = ['error' => 'No data!'];
+        $this->setData($data);
+        // if (is_array($data) && count($data)) $this->setData($data);
+        if (is_string($data) || empty($data) || !count($data)) {
+            $this->setData([
+                'error' => 'EMPTY_DATA',
+                'message' => 'The request URL might be mistaken or external API
+                    is not available at this moment.'
+            ]);
+        }
 
         if (file_exists($templateFile)) return $templateFile;
 
-        // FIXME: ERROR
-        return false;
+        return $template;
     }
 
     /**
@@ -66,7 +70,7 @@ class ViewController {
     /**
      * Setter of data
      */
-    private function setData($data) {
+    public function setData($data) {
         $this->data = $data;
     }
 

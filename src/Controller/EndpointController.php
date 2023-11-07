@@ -88,12 +88,9 @@ class EndpointController {
      */
     public function handleTemplate(string $template) {
         if (get_query_var('custom_endpoint', false) !== false) {
-
-            // FIXME: Error
             $data = $this->apiService->get_api_data('/users');
 
-            if (!is_bool($data)) return $this->viewController->setTemplate($data);
-            else echo 'Error';
+            return $this->viewController->setTemplate($data, $template);
 
         }
         return $template;
