@@ -1,18 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Frolyak\FrolyakIvanWpPlugin;
 
 use Frolyak\FrolyakIvanWpPlugin\Controller\EndpointController;
-
 use Frolyak\FrolyakIvanWpPlugin\Service\APIService;
 use Frolyak\FrolyakIvanWpPlugin\Cache\CacheHandler;
 use Frolyak\FrolyakIvanWpPlugin\View\ViewController;
 
 /**
  * Class FrolyakIvanWpPlugin
-*/
+ */
 
-class FrolyakIvanWpPlugin {
+class FrolyakIvanWpPlugin
+{
 
     /**
      * @var EndpointController endpointController
@@ -25,7 +27,8 @@ class FrolyakIvanWpPlugin {
 
      * Initializes main objects needed for the plugin...
      */
-    public function __construct() {
+    public function __construct()
+    {
         $cacheHandler = new CacheHandler();
         $apiService = new APIService($cacheHandler);
         $viewController = ViewController::instance();
@@ -37,7 +40,8 @@ class FrolyakIvanWpPlugin {
      * Activates the plugin, creates a custom endpoint and flushes the
      *  rewrite rules.
      */
-    public function activate() {
+    public function activate()
+    {
         $this->endpointController->setCustomEndpoint();
         flush_rewrite_rules();
     }
@@ -45,7 +49,9 @@ class FrolyakIvanWpPlugin {
     /**
      * Deactivates the plugin and flushes the rewrite rules.
      */
-    public function deactivate() {
+    public function deactivate()
+    {
         flush_rewrite_rules();
     }
+
 }

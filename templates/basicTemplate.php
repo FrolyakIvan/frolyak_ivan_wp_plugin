@@ -38,16 +38,16 @@
                         <?php foreach ($data as $user): ?>
                             <tr>
                                 <td><a onclick="return false" href="" class="user-details" data-userId="<?= $user['id'] ?>">
-                                    <?= "#". htmlspecialchars($user['id']) ?>
+                                    <?= "#". htmlspecialchars($user['id'] ?? '') ?>
                                 </a></td>
                                 <td><a onclick="return false" href="" class="user-details" data-userId="<?= $user['id'] ?>">
-                                    <?= htmlspecialchars($user['name']) ?>
+                                    <?= htmlspecialchars($user['name'] ?? '') ?>
                                 </a></td>
                                 <td><a onclick="return false" href="" class="user-details" data-userId="<?= $user['id'] ?>">
-                                    <?= htmlspecialchars($user['username']) ?>
+                                    <?= htmlspecialchars($user['username'] ?? '') ?>
                                 </a></td>
-                                <td><?= htmlspecialchars($user['phone']) ?: '-' ?></td>
-                                <td><?= htmlspecialchars($user['website']) ?: '-' ?></td>
+                                <td><?= htmlspecialchars($user['phone'] ?? '') ?: '-' ?></td>
+                                <td><?= htmlspecialchars($user['website'] ?? '') ?: '-' ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
