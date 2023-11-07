@@ -16,42 +16,68 @@
 </head>
 <body>
     <section id="content">
-        <div class="row">
+        <div class="row header">
             <div class="title">
-                <h1>User Data</h1>
+                <h1>Frolyak Ivan WP Plugin</h1>
+                <h3>Users Data</h3>
             </div>
         </div>
-        <div class="row">
-            <table id="users-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>NAME</th>
-                        <th>USERNAME</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($data as $user): ?>
+        <div class="row plugin-content">
+            <?php if (!isset($data['error'])): ?>
+                <table id="users-table">
+                    <thead>
                         <tr>
-                            <td><a onclick="return false" href="" class="user-details" data-userId="<?= $user['id'] ?>">
-                                <?= htmlspecialchars($user['id']) ?>
-                            </a></td>
-                            <td><a onclick="return false" href="" class="user-details" data-userId="<?= $user['id'] ?>">
-                                <?= htmlspecialchars($user['name']) ?>
-                            </a></td>
-                            <td><a onclick="return false" href="" class="user-details" data-userId="<?= $user['id'] ?>">
-                                <?= htmlspecialchars($user['username']) ?>
-                            </a></td>
+                            <th>ID</th>
+                            <th>NAME</th>
+                            <th>USERNAME</th>
+                            <th>PHONE</th>
+                            <th>WEBSITE</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($data as $user): ?>
+                            <tr>
+                                <td><a onclick="return false" href="" class="user-details" data-userId="<?= $user['id'] ?>">
+                                    <?= "#". htmlspecialchars($user['id']) ?>
+                                </a></td>
+                                <td><a onclick="return false" href="" class="user-details" data-userId="<?= $user['id'] ?>">
+                                    <?= htmlspecialchars($user['name']) ?>
+                                </a></td>
+                                <td><a onclick="return false" href="" class="user-details" data-userId="<?= $user['id'] ?>">
+                                    <?= htmlspecialchars($user['username']) ?>
+                                </a></td>
+                                <td><?= htmlspecialchars($user['phone']) ?: '-' ?></td>
+                                <td><?= htmlspecialchars($user['website']) ?: '-' ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php else: ?>
+                <!-- Error message in case data is empty -->
+                <div class="error-container">
+                    <p><b>Error:</b> <?= $data['error']; ?></p>
+                    <p><b>Message:</b> <?= $data['message']; ?></p>
+                </div>
+            <?php endif; ?>
+
         </div>
 
         <div class="row">
-            <div id="user-details">
-                <!-- User details -->
-            </div>
+            <!-- User details -->
+            <div id="user-details"></div>
+        </div>
+
+        <div class="row bottom">
+            <small>
+                Data source:
+                    <a href="https://jsonplaceholder.typicode.com/" target="_blank">
+                        https://jsonplaceholder.typicode.com/
+                    </a>
+            </small>
+        </div>
+
+        <div class="row">
+
         </div>
     </section>
 
