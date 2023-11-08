@@ -24,7 +24,7 @@ The custom endpoint defined for this task is `/custom-endpoint`
 The implementation follows the object-oriented programming paradigm. Where each object corresponds to a class that performs certain functions and communicates with other classes.
 There is a main class of the plugin that launches all other objects necessary for the operation of this plugin. In addition, there is a class that intercommunicates different components or classes so that the flow can be managed in a centralized way.
 
-The implementation primarily consists of four components:
+The implementation primarily consists of five components:
 
 - **FrolyakIvanWpPlugin Class**: The main class of the plugin, responsible for initializing key components and managing the activation and deactivation of the plugin.
 - **EndpointController Class**: Serves as the central class that manages and communicates with other classes or objects. It is responsible for loading styles and scripts, adding rewrite rules, handling AJAX calls, etc.
