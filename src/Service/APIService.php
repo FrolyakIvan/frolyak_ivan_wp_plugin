@@ -41,19 +41,19 @@ class APIService
      * @return array|bool returns the parsed data fetched from the request
      *  or, in case of a error a false
      */
-    public function get_api_data(string $endpoint)
+    public function getApiData(string $endpoint)
     {
         // Check if cached
         $apiRequestUrl = "$this->API_URL$endpoint";
 
-        $key = self::generate_cache_key($apiRequestUrl);
+        $key = self::generateCacheKey($apiRequestUrl);
 
         if ( $cachedValue = $this->cacheHandler->get($key) )
         {
-            return self::parse_api_data($cachedValue);
+            return self::parseApiData($cachedValue);
         }
 
-        $fetchedData = $this->fetch_data($apiRequestUrl);
+        $fetchedData = $this->fetchData($apiRequestUrl);
 
         // If an error has ocurred return error details to the endpoint...
         if( is_array($fetchedData) && isset($fetchedData['error']) )
@@ -64,7 +64,7 @@ class APIService
         // If not cached, get and set new data
         $this->cacheHandler->set($key, $fetchedData);
 
-        return self::parse_api_data($fetchedData);
+        return self::parseApiData($fetchedData);
     }
 
     /**
@@ -73,7 +73,7 @@ class APIService
      * @param  string url
      * @return string Returns the request body data
      */
-    private function fetch_data($url)
+    private function fetchData($url)
     {
 
         $response = wp_remote_get($url);
@@ -109,7 +109,7 @@ class APIService
      * @param  string url
      * @return string Returns a hashed identifier
      */
-    private static function generate_cache_key(string $url)
+    private static function generateCacheKey(string $url)
     {
         return md5($url);
     }
@@ -120,7 +120,7 @@ class APIService
      * @param  string data
      * @return array|bool
      */
-    private static function parse_api_data(string $data)
+    private static function parseApiData(string $data)
     {
         $parsedData = null;
 

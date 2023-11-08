@@ -58,7 +58,8 @@ class ViewController
             $this->setData(
                 [
                     'error' => 'EMPTY_DATA',
-                    'message' => 'The request URL might be mistaken or external API is not available at this moment.'
+                    'message' => 'The request URL might be mistaken or external
+                    API is not available at this moment.'
                 ]
             );
         }

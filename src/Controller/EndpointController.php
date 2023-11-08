@@ -106,7 +106,7 @@ class EndpointController
     {
         if ( get_query_var('custom_endpoint', false) !== false )
         {
-            $data = $this->apiService->get_api_data('/users');
+            $data = $this->apiService->getApiData('/users');
             return $this->viewController->setTemplate($data, $template);
         }
         return $template;
@@ -128,7 +128,7 @@ class EndpointController
                 500
             );
         } else {
-            $data = $this->apiService->get_api_data("/users/$userId");
+            $data = $this->apiService->getApiData("/users/$userId");
             wp_send_json_success($data);
         }
 
