@@ -54,7 +54,7 @@ class EndpointController
             true
         );
 
-        // Localizes the defined script and includes 'ajaxurl' variable for AJAX requests...
+        // Localizes the defined script and includes 'ajaxurl' global variable for AJAX requests...
         wp_localize_script('frolyak-main-js', 'ajaxurl', admin_url('admin-ajax.php'));
     }
 
@@ -81,7 +81,7 @@ class EndpointController
      */
     public function setCustomEndpoint()
     {
-        add_rewrite_rule('^custom-endpoint/?$', 'index.php?custom_endpoint=1', 'top');
+        return add_rewrite_rule('^custom-endpoint/?$', 'index.php?custom_endpoint=1', 'top');
     }
 
     /**
@@ -119,12 +119,13 @@ class EndpointController
     public function getUsersDetails()
     {
         $data = null;
-        $userId = isset($_POST['userId']) && !empty($_POST['userId']) ? $_POST['userId'] : false;
+        $userId = isset( $_POST['userId'] ) && !empty( $_POST['userId'] ) ?
+            $_POST['userId'] : false;
 
         if ( is_bool($userId) )
         {
             wp_send_json_error(
-                ['message'=>"There is no user id specified in the request payload."],
+                [ 'message'=>"There is no user id specified in the request payload." ],
                 500
             );
         } else {

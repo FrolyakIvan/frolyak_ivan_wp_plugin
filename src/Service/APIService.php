@@ -37,13 +37,16 @@ class APIService
     /**
      * Manages the Cache and Fetch data from API
 
+     * If request URL have been used before, it means that it
+     * has to be in cache. Otherwise we make a HTTP request
+     * to get the data from the external API.
+
      * @param  string endpoint
-     * @return array|bool returns the parsed data fetched from the request
-     *  or, in case of a error a false
+     * @return array returns the parsed data fetched from the request
+     *  or, in case of a error an error Array...
      */
     public function getApiData(string $endpoint)
     {
-        // Check if cached
         $apiRequestUrl = "$this->API_URL$endpoint";
 
         $key = self::generateCacheKey($apiRequestUrl);
@@ -55,13 +58,13 @@ class APIService
 
         $fetchedData = $this->fetchData($apiRequestUrl);
 
-        // If an error has ocurred return error details to the endpoint...
+        // If an error has ocurred return error details to the frontend...
         if( is_array($fetchedData) && isset($fetchedData['error']) )
         {
             return $fetchedData;
         }
 
-        // If not cached, get and set new data
+        // If not in cache, set new data
         $this->cacheHandler->set($key, $fetchedData);
 
         return self::parseApiData($fetchedData);
@@ -75,7 +78,6 @@ class APIService
      */
     private function fetchData($url)
     {
-
         $response = wp_remote_get($url);
 
         if ( is_wp_error($response) )
@@ -118,7 +120,7 @@ class APIService
      * Parses JSON data string to an array
 
      * @param  string data
-     * @return array|bool
+     * @return array
      */
     private static function parseApiData(string $data)
     {

@@ -22,10 +22,7 @@ class ViewController
     private $data;
 
 
-    private function __construct()
-    {
-        //...
-    }
+    private function __construct() {}
 
     /**
      * Returns the unique instance of this class
@@ -45,7 +42,7 @@ class ViewController
 
      * @param  array data
      * @param  string template
-     * @return string|bool Depending of template existence
+     * @return string
      */
     public function setTemplate($data, $template)
     {
@@ -64,7 +61,7 @@ class ViewController
             );
         }
 
-        if (file_exists($templateFile))
+        if ( file_exists($templateFile) )
         {
             return $templateFile;
         }

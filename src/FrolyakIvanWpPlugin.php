@@ -25,7 +25,7 @@ class FrolyakIvanWpPlugin
     /**
      * Constructs the main plugin Class
 
-     * Initializes main objects needed for the plugin...
+     * Initializes main objects needed for the plugin
      */
     public function __construct()
     {
