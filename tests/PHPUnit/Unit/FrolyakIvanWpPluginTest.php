@@ -36,13 +36,4 @@ class FrolyakIvanWpPluginTest extends TestCase
 
     }
 
-    // public function testActivate() : void
-    // {
-    //     WP_Mock::userFunction('flush_rewrite_rules')
-    //         ->once();
-
-    //     $this->frolyakIvanWpPlugin->activate();
-
-    // }
-
 }
