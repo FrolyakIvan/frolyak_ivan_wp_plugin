@@ -54,6 +54,11 @@ class EndpointControllerTest extends TestCase
 
     public function testSetCustomEndpoint()
     {
+        WP_Mock::userFunction('get_option')
+            ->once()
+            ->with('frolyak_ivan_custom_endpoint', 'custom-endpoint')
+            ->andReturn('custom-endpoint');
+
         WP_Mock::userFunction('add_rewrite_rule')
             ->once()
             ->with('^custom-endpoint/?$', 'index.php?custom_endpoint=1', 'top')
