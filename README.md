@@ -43,7 +43,7 @@ The integration of a Composer package is intended to facilitate effective autolo
 
 ## Testing Details
 
-For testing purposes I decided to go with PHPUnit framework in conjunction with [https://github.com/10up/wp_mock]`WP_MOCK` library.
+For testing purposes I decided to go with PHPUnit framework in conjunction with [https://github.com/10up/wp_mock](`WP_MOCK`) library.
 The decision to use `WP_MOCK` is because it facilitates the testing process when native Wordpress API functions are in use.
 
 ### Running Tests
