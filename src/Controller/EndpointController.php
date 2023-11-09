@@ -68,6 +68,19 @@ class EndpointController
     }
 
     /**
+     * Changes the 'rewrite_rules' and flushes them
+     */
+    public function updateCustomEndpoint($oldValue, $newValue)
+    {
+        if ( $oldValue !== $newValue )
+        {
+            global $wp_rewrite;
+            $this->setCustomEndpoint();
+            $wp_rewrite->flush_rules();
+        }
+    }
+
+    /**
      * Sets Wordpress actions for enqueuing scripts and handles AJAX requests
      */
     public function setEnqueueScriptsAndAjax()
@@ -81,7 +94,9 @@ class EndpointController
      */
     public function setCustomEndpoint()
     {
-        return add_rewrite_rule('^custom-endpoint/?$', 'index.php?custom_endpoint=1', 'top');
+        $customEndpoint = get_option('frolyak_ivan_custom_endpoint', 'custom-endpoint');
+
+        return add_rewrite_rule("^$customEndpoint/?$", 'index.php?custom_endpoint=1', 'top');
     }
 
     /**

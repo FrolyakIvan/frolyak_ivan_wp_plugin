@@ -8,6 +8,7 @@ use Frolyak\FrolyakIvanWpPlugin\Controller\EndpointController;
 use Frolyak\FrolyakIvanWpPlugin\Service\APIService;
 use Frolyak\FrolyakIvanWpPlugin\Cache\CacheHandler;
 use Frolyak\FrolyakIvanWpPlugin\View\ViewController;
+use Frolyak\FrolyakIvanWpPlugin\Admin\AdminController;
 
 /**
  * Class FrolyakIvanWpPlugin
@@ -34,6 +35,8 @@ class FrolyakIvanWpPlugin
         $viewController = ViewController::instance();
 
         $this->endpointController = new EndpointController($apiService, $viewController);
+
+        $this->setAdminPage();
     }
 
     /**
@@ -51,7 +54,30 @@ class FrolyakIvanWpPlugin
      */
     public function deactivate()
     {
+        delete_option('frolyak_ivan_custom_endpoint');
         flush_rewrite_rules();
+    }
+
+    /**
+     * Sets the Admin Page once the plugin is loaded
+     */
+    public function setAdminPage()
+    {
+        add_action('plugins_loaded', function()
+        {
+            new AdminController();
+            // Update option with a default value
+            if ( get_option('frolyak_ivan_custom_endpoint') === false )
+            {
+                update_option('frolyak_ivan_custom_endpoint', 'custom-endpoint');
+            }
+            add_action(
+                'updated_option',
+                [$this->endpointController, 'updateCustomEndpoint'],
+                10,
+                2
+            );
+        });
     }
 
 }
